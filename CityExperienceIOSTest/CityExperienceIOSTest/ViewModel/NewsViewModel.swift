@@ -16,7 +16,7 @@ class NewsViewModel {
     /// Flag that indicate the api is calling.
     /// It would turn true if it is calling an api.
     /// The purpose is to block another api call to prevent multiple calling.
-    private(set) var isLoading = false
+    var isLoading = false
 
     /// Flag that indicate if more data can be called.
     /// It would turn false if the data get from api is less than pagesize.
@@ -47,7 +47,9 @@ class NewsViewModel {
     /// If it recieve any error from api, it would trigger fail network call back.
     private(set) var error:Error? {
         didSet {
-            didFailTheNetworkCall()
+            if error != nil {
+                didFailTheNetworkCall()
+            }
         }
     }
 
@@ -68,13 +70,18 @@ class NewsViewModel {
     /// If the count is less than the page size, that means it won't have next page and set can load more to false to prevent api calling.
     func refreshNews() {
 
+        resetError()
+
         guard let searchWord = searchWord else {
             self.validationError = NewsViewModelError.noSearchWord
+            didFailTheNetworkCall()
             return
         }
 
         canLoadMore = true
         news = []
+        
+        isLoading = true
 
         NewsService.shared.getNews(searchWord: searchWord,
                                    page: 1,
@@ -111,6 +118,8 @@ class NewsViewModel {
     /// If the count is less than the page size, that means it won't have next page and set can load more to false to prevent api calling.
     func updateSearchWord(searchWord:String) {
 
+        resetError()
+
         if searchWord.count == 0 {
             news = []
             self.validationError = NewsViewModelError.noSearchWord
@@ -120,6 +129,8 @@ class NewsViewModel {
         canLoadMore = true
         news = []
         self.searchWord = searchWord
+
+        isLoading = true
 
         NewsService.shared.getNews(searchWord: searchWord,
                                    page: 1,
@@ -153,6 +164,8 @@ class NewsViewModel {
     /// If the api get records, it would increase the page number.
     /// If the count is less than the page size, that means it won't have next page and set can load more to false to prevent api calling.
     func loadMoreNews() {
+
+        resetError()
 
         guard let searchWord = searchWord else {
             self.validationError = NewsViewModelError.noSearchWord
@@ -204,5 +217,10 @@ class NewsViewModel {
     func appendNews(_ news:[News]) {
 
         self.news.append(contentsOf: news)
+    }
+
+    func resetError() {
+        error = nil
+        validationError = nil
     }
 }
