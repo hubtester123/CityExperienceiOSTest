@@ -16,6 +16,10 @@ BasicFunction -
 
 ![](BasicFunction.gif)
 
+Advanced Function - 
+
+![](AdvancedFunction.gif)
+
 ## Sreenshoot:
 
 ListViewController - 
@@ -25,3 +29,15 @@ ListViewController -
 DetailViewController -
 
 ![](DetailViewController.png)
+
+Search -
+
+![](Search_1.png) ![](Search_2.png)
+
+Infinite Scrolling -
+
+![](LoadMore_1.png) ![](LoadMore_2.png)
+
+Pull To refresh -
+
+![](PullToReload.png)
