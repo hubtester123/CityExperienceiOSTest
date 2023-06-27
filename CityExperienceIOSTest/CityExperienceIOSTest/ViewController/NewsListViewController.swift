@@ -10,7 +10,7 @@ import SnapKit
 
 class NewsListViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
 
-    let newsViewModel = NewsViewModel()
+    let newsViewModel = DummyNewsViewModel()
 
     let refreshControl = UIRefreshControl()
     let searchBar = UISearchBar()
@@ -36,6 +36,8 @@ class NewsListViewController: UIViewController, UITableViewDelegate, UITableView
                 self.refreshControl.endRefreshing()
             }
         }
+
+        newsViewModel.getDummyNews()
     }
 
     private func setupUI() {
