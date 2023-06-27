@@ -43,7 +43,6 @@ class NewsDetailViewController: UIViewController {
 
         imageView.contentMode = .scaleAspectFit
         self.view.addSubview(imageView)
-        imageView.image = UIImage(named: "NoImage")
 
         titleLebel.font = .preferredFont(forTextStyle: .headline)
         titleLebel.numberOfLines = 2
@@ -68,7 +67,7 @@ class NewsDetailViewController: UIViewController {
             make.top.equalToSuperview().offset(-10)
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
-            make.height.equalTo(300)
+            make.height.equalTo(230)
         }
 
         titleLebel.snp.makeConstraints { make in
@@ -103,6 +102,7 @@ class NewsDetailViewController: UIViewController {
         authorLabel.text = "Author: " + (newsDetailViewModel.news.author ?? "")
         sourceLabel.text = "Source: " + (newsDetailViewModel.news.source?.name ?? "")
         contentTextView.text = newsDetailViewModel.news.content
+        imageView.sd_setImage(with: URL(string: newsDetailViewModel.news.urlToImage ?? ""), placeholderImage: UIImage(named: "NoImage"))
     }
 
 }

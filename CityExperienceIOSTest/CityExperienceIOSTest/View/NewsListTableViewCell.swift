@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 import SnapKit
+import SDWebImage
 
 class NewsListTableViewCell: UITableViewCell {
 
@@ -47,7 +48,6 @@ class NewsListTableViewCell: UITableViewCell {
 
         newsImageView.contentMode = .scaleAspectFit
         addSubview(newsImageView)
-        newsImageView.image = UIImage(named: "NoImage")
 
         titleLebel.font = .preferredFont(forTextStyle: .headline)
         titleLebel.numberOfLines = 2
@@ -66,6 +66,7 @@ class NewsListTableViewCell: UITableViewCell {
         titleLebel.text = news?.title ?? ""
         authorLabel.text = "Author: " + (news?.author ?? "")
         sourceLabel.text = "Source: " + (news?.source?.name ?? "")
+        newsImageView.sd_setImage(with: URL(string: news?.urlToImage ?? ""), placeholderImage: UIImage(named: "NoImage"))
     }
 
     private func setupConstraints() {
@@ -74,7 +75,7 @@ class NewsListTableViewCell: UITableViewCell {
             make.top.equalToSuperview()
             make.leading.equalToSuperview()
             make.trailing.equalToSuperview()
-            make.height.equalTo(150)
+            make.height.equalTo(230)
         }
 
         titleLebel.snp.makeConstraints { make in
